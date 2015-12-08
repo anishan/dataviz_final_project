@@ -39,112 +39,133 @@ path {
 
 window.addEventListener("load", run);
 
+var GLOBAL = 
+{
+    data: []
+};
 
-function run () {
+function run () 
+{
 
     // world-topo.json is a GeoJSON file, not a TopoJSON file
     // so there's nothing special to be done
+    d3.csv("data/refugees.csv", function(data) 
+    {
+      GLOBAL.data = data;
+      console.log("LOADED DATA");
+      console.log(data);
+      // console.log(data[0]["Country / territory of asylum/residence"]);
 
-    d3.json("world-topo.json", function(error,topology) {
-	attachVALToWorldData(topology,data_values);
-	drawMap(topology);
+        d3.json("world-topo.json", function(error,topology) 
+            {
+            // attachVALToWorldData(topology,data);
+            drawMap(topology);
+            });
     });
+
 }
 
+// function attachVALToWorldData (world,data) 
+// {
+
+//     var features = world.features;
+//     var f;
+
+//     for (var i=0; i<features.length; i++) 
+//     {
+//     	f = hasVAL(features[i].id,"2014",data);
+//     	if (f) 
+//         {
+//     	    features[i]["hasVAL"] = true;
+//     	    features[i]["VAL"] = f;
+//     	} 
+//         else 
+//         {
+//     	    features[i]["hasVAL"] = false;
+//     	}
+//     }
+// }
 
 
-/*
- * Attach country values to the world data
- *
- */
+// function hasVAL (country, year, data) {
+//     for (var i=0; i < data.length; i++) 
+//     {
+//     	if (lookupCountry(data[i]["Country / territory of asylum/residence"]) === country && data[i]["Year"]===year) 
+//         {
+//     	    return data[i]["Total Population"];
+//     	}
+//     }
+//     return false;
+// }
 
-function attachVALToWorldData (world,data) {
-
-    var features = world.features;
-    var f;
-
-    for (var i=0; i<features.length; i++) {
-	f = hasVAL(features[i].id,data);
-	if (f) {
-	    features[i]["hasVAL"] = true;
-	    features[i]["VAL"] = f;
-	} else {
-	    features[i]["hasVAL"] = false;
-	}
+function lookupCountry(country)
+{
+    for(val in countryCodeMap)
+    {
+        if(country == val[1])
+        {
+            console.log(val[0])
+            return val[0];
+        }
     }
 }
 
-
-function hasVAL (code,data) {
-
-    for (var i=0;i<data.length; i++) {
-	if (data[i][0] === code) {
-	    return data[i][2];
-	}
-    }
-    return false;
-}
-
-
-
-
-
-var data_values = [
-    ["USA",'US', 71],
-    ["CHN",'China',51],
-    ["JPN",'Japan',50],
-    ["GBR",'UK',45],
-    ["KOR",'South Korea',44],
-    ["NOR",'Norway',42],
-    ["CAN",'Canada',42],
-    ["SWE",'Sweden',42],
-    ["NLD",'Netherlands',41],
-    ["DEU",'Germany',41],
-    ["SGP",'Singapore',40],
-    ["DNK",'Denmark',40],
-    ["CHE",'Switzerland',39],
-    ["FRA",'France',39],
-    ["AUS",'Australia',39],
-    ["FIN",'Finland',39],
-    ["NZL",'New Zealand',38],
-    ["LUX",'Luxembourg',36],
-    ["BEL",'Belgium',33],
-    ["AUT",'Austria',33],
-    ["IND",'India',31],
-    ["HKG",'Hong Kong',31],
-    ["ARE",'United Arab Emirates',30],
-    ["ISR",'Israel',30],
-    ["IRL",'Ireland',29],
-    ["POL",'Poland',29],
-    ["RUS",'Russia',29],
-    ["TWN",'Taiwan',28],
-    ["HUN",'Hungary',27],
-    ["BRA",'Brazil',27],
-    ["CZE",'Czech Republic',27],
-    ["ESP",'Spain',27],
-    ["MYS",'Malaysia',25],
-    ["ITA",'Italy',25],
-    ["VNM",'Vietnam',24],
-    ["TUR",'Turkey',23],
-    ["CHL",'Chile',23],
-    ["IDN",'Indonesia',23],
-    ["PRT",'Portugal',21],
-    ["MEX",'Mexico',21],
-    ["SAU",'Saudi Arabia',21],
-    ["PHL",'Philippines',21],
-    ["BGR",'Bulgaria',20],
-    ["THA",'Thailand',20],
-    ["ROU",'Romania',19],
-    ["COL",'Colombia',19],
-    ["PER",'Peru',19],
-    ["GRC",'Greece',19],
-    ["EGY",'Egypt',18],
-    ["ZAF",'South Africa',18],
-    ["VEN",'Venezuela',18],
-    ["ARG",'Argentina',17],
-    ["KEN",'Kenya',17],
-    ["NGA",'Nigeria',16],
-    ["UKR",'Ukraine',15]
+var countryCodeMap = [
+    ["USA",'US'],
+    ["CHN",'China'],
+    ["JPN",'Japan'],
+    ["GBR",'UK'],
+    ["KOR",'South Korea'],
+    ["NOR",'Norway'],
+    ["CAN",'Canada'],
+    ["SWE",'Sweden'],
+    ["NLD",'Netherlands'],
+    ["DEU",'Germany'],
+    ["SGP",'Singapore'],
+    ["DNK",'Denmark'],
+    ["CHE",'Switzerland'],
+    ["FRA",'France'],
+    ["AUS",'Australia'],
+    ["FIN",'Finland'],
+    ["NZL",'New Zealand'],
+    ["LUX",'Luxembourg'],
+    ["BEL",'Belgium'],
+    ["AUT",'Austria'],
+    ["IND",'India'],
+    ["HKG",'Hong Kong'],
+    ["ARE",'United Arab Emirates'],
+    ["ISR",'Israel'],
+    ["IRL",'Ireland'],
+    ["POL",'Poland'],
+    ["RUS",'Russia'],
+    ["TWN",'Taiwan'],
+    ["HUN",'Hungary'],
+    ["BRA",'Brazil'],
+    ["CZE",'Czech Republic'],
+    ["ESP",'Spain'],
+    ["MYS",'Malaysia'],
+    ["ITA",'Italy'],
+    ["VNM",'Vietnam'],
+    ["TUR",'Turkey'],
+    ["CHL",'Chile'],
+    ["IDN",'Indonesia'],
+    ["PRT",'Portugal'],
+    ["MEX",'Mexico'],
+    ["SAU",'Saudi Arabia'],
+    ["PHL",'Philippines'],
+    ["BGR",'Bulgaria'],
+    ["THA",'Thailand'],
+    ["ROU",'Romania'],
+    ["COL",'Colombia'],
+    ["PER",'Peru'],
+    ["GRC",'Greece'],
+    ["EGY",'Egypt'],
+    ["ZAF",'South Africa'],
+    ["VEN",'Venezuela'],
+    ["ARG",'Argentina'],
+    ["KEN",'Kenya'],
+    ["NGA",'Nigeria'],
+    ["UKR",'Ukraine']
 ]
 
 
@@ -154,11 +175,13 @@ var data_values = [
  *
  */
 
-function availableWidth () {
+function availableWidth () 
+{
     return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 }
 
-function availableHeight () {
+function availableHeight () 
+{
     return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
 
@@ -181,7 +204,8 @@ var saved_width = 0;
  *
  */
 
-function drawMap (world) {
+function drawMap (world) 
+{
 
     console.log(world.features);
 
@@ -221,7 +245,7 @@ function drawMap (world) {
     var path = d3.geo.path()
 	.projection(projection);
 
-    var max_VAL = d3.max(data_values,function (r) { return r[2]; });
+    var max_VAL = d3.max(GLOBAL.data,function (r) { return r["Total Population"]; });
 
     var country = g.selectAll(".country")   // select country objects (which don't exist yet)
 	.data(world.features)  // bind data to these non-existent objects
