@@ -232,6 +232,7 @@ function drawMap (world) {
 	.attr("d", path) // create them using the svg path generator defined above
         // color each country based on VAL (set to opacity 0 if no VAL)
 	.style("fill", color_CountryBaseVAL)
+    .style("stroke", "blue")
     .style("fill-opacity",function(d) {if (d.hasVAL) { return d.VAL / max_VAL; } else { return 0; } })
 
     // hide antarctica (maybe not needed...)
