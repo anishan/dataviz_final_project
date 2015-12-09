@@ -75,11 +75,11 @@ function attachVALToWorldData (world,data) {
 }
 
 
-function hasVAL (code,data) {
+function hasVAL (country, year, data) {
 
     for (var i=0;i<data.length; i++) {
-	if (data[i][0] === code) {
-	    return data[i][2];
+	if (data[i]["Country / crap"] === country && data[i]["year"] === year) {
+	    return data[i]["Total number thing"];
 	}
     }
     return false;
