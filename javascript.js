@@ -4,10 +4,10 @@ var GLOBAL = {
     data: [],
     world_json: {},
     direction: 0,
-    var countryCodeMap = {
+    countryCodeMap : {
         "United States of America": "USA",
         "China, Hong Kong SAR": "CHN",
-        "Japan"; "JPN",
+        "Japan": "JPN",
         "United Kingdom": "GBR",
         "Rep. of Korea" : "KOR",
         "Norway": "NOR",
@@ -56,7 +56,7 @@ var GLOBAL = {
         "Colombia": "COL",
         "Peru": "PER",
         "Greece": "GRC",
-        "Egypt": "EGY".
+        "Egypt": "EGY",
         "South Africa": "ZAF",
         "Venezuela (Bolivarian Republic of)": "VEN",
         "Argentina": "ARG",
@@ -68,16 +68,17 @@ var GLOBAL = {
         "Chad": "TCD",
         "Guatemala": "GTM",
         "El Salvador": "SLV",
-        "Nicaragua": "NIC"
+        "Nicaragua": "NIC",
         "Lao People's Dem. Rep.": "LAO",
         "Kuwait":"KWT",
-        "Cambodia":"KHM"
+        "Cambodia":"KHM",
         "Mozambique": "MOZ",
         "Armenia": "ARM",
         "Ghana": "GHA",
         "Tunisia": "TUN",
-        "Morocco": "MAR"
+        "Morocco": "MAR",
         "Dem. Rep. of the Congo": "COD",
+        "Congo": "COG",
         "Burundi": "BDI",
         "Angola": "AGO",
         "Rwanda": "RWA",
@@ -127,7 +128,7 @@ var GLOBAL = {
         "Burkina Faso": "BFA",
         "Belarus":"BLR",
         "Turkmenistan":"TKM",
-        "Stateless":, "STA",
+        "Stateless": "STA",
         "Zimbabwe": "ZWE",
         "Eritrea": "ERI",
         "Georgia": "GEO",
@@ -143,7 +144,49 @@ var GLOBAL = {
         "Mauritania": "MRT",
         "Mali": "MLI" ,
         "Azerbaijan": "AZE",
-        "Aruba": "ABW"
+        "Aruba": "ABW",
+        "Afghanistan":"AFG",
+         "Albania" :"ALB",
+         "Antarctica": "ATA",
+         "French Southern Territories": "ATF",  //CANT FIND
+         "Bahamas":"BHS",
+         "Bosnia and Herzegovina":"BIH",
+         "Brunei Darussalam":"BRN",
+         "Coast of Ivory":"CIV",  //Change in the csv
+         "Estonia":"EST",
+         "Fiji":"FJI",
+         "Falkland Islands (Malvinas)":"FLK",
+         "Guinea":"GIN",    //worry about this later
+         "Greenland":"GRL",
+         "Iraq":"IRQ",
+         "Iceland":"ISL",
+         "Jamaica":"JAM"  ,
+         "Libya":"LBY",
+         "Lithuania":"LTU",
+         "Latvia":"LVA",
+         "Rep. of Moldova":"MDA",
+         "Madagascar":"MDG",
+         "The former Yugoslav Republic of Macedonia":"MKD",
+         "Montenegro":"MNE",
+         "Mongolia":"MNG",
+         "Malawi":"MWI",
+         "New Caledonia":"NCL",
+         "Oman":"OMN",
+         "Puerto Rico":"PRI",
+         "Dem. People's Rep. of Korea":"PRK",
+         "South Sudan": "SDS",
+         "Solomon Islands":"SLB",
+         "Serbia":"SRB", //two serbia's?
+         "Suriname":"SUR",
+         "Slovakia":"SVK",
+         "Slovenia":"SVN",
+         "Tajikistan":"TJK",
+         "Timor-Leste":"TLS",
+         "Trinidad and Tobogo":"TTO",
+         "Uruguay":"URY",
+         "Uzbekistan":"UZB",
+         "Vanuatu":"VUT",
+         "Palestinian": "PSE"
     }
 
 };
@@ -159,9 +202,9 @@ function run()
     d3.csv("data/refugees2.csv", function(data) {
       GLOBAL.data = data;
       console.log("LOADED DATA");
-      console.log(data);
-      console.log(getNumRefugees("1964", "India", 0));
-      console.log(getNumRefugees("1964", "Tibetan", 1));
+      // console.log(data);
+      // console.log(getNumRefugees("1964", "India", 0));
+      // console.log(getNumRefugees("1964", "Tibetan", 1));
 
       d3.json("world-topo.json", function(error,world_json)
       {
@@ -209,7 +252,18 @@ function getNumRefugees(year, countryCode, direction)
 // returns country name from code
 function getCountryName(countryCode)
 {
-    return countryCode;
+    for (key in GLOBAL.countryCodeMap)
+    {
+        if (GLOBAL.countryCodeMap[key] == countryCode)
+        {
+            return key
+        }
+        // console.log(key);
+        // break;
+    }
+    // console.log("Country code not in dictionary");
+    console.log(countryCode)
+
 }
 
 // Get browser width
@@ -280,7 +334,13 @@ function drawMap(world_json)
     .append("path")
     .attr("class", "country")
     .attr("d", path)
-    .style("stroke", "gray");
+    .style("stroke", "gray")
+    .style("fill-opacity", function(d)
+    {
+        // console.log(d.id);
+        var ref = getNumRefugees("1999", d.id, 0);
+        return 1;
+    });
 
 
 }
