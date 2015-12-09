@@ -39,24 +39,24 @@ path {
 
 window.addEventListener("load", run);
 
-var GLOBAL = 
+var GLOBAL =
 {
     data: []
 };
 
-function run () 
+function run ()
 {
 
     // world-topo.json is a GeoJSON file, not a TopoJSON file
     // so there's nothing special to be done
-    d3.csv("data/refugees.csv", function(data) 
+    d3.csv("data/refugees.csv", function(data)
     {
       GLOBAL.data = data;
       console.log("LOADED DATA");
       console.log(data);
       // console.log(data[0]["Country / territory of asylum/residence"]);
 
-        d3.json("world-topo.json", function(error,topology) 
+        d3.json("world-topo.json", function(error,topology)
             {
             // attachVALToWorldData(topology,data);
             drawMap(topology);
@@ -65,21 +65,21 @@ function run ()
 
 }
 
-// function attachVALToWorldData (world,data) 
+// function attachVALToWorldData (world,data)
 // {
 
 //     var features = world.features;
 //     var f;
 
-//     for (var i=0; i<features.length; i++) 
+//     for (var i=0; i<features.length; i++)
 //     {
 //     	f = hasVAL(features[i].id,"2014",data);
-//     	if (f) 
+//     	if (f)
 //         {
 //     	    features[i]["hasVAL"] = true;
 //     	    features[i]["VAL"] = f;
-//     	} 
-//         else 
+//     	}
+//         else
 //         {
 //     	    features[i]["hasVAL"] = false;
 //     	}
@@ -88,9 +88,9 @@ function run ()
 
 
 // function hasVAL (country, year, data) {
-//     for (var i=0; i < data.length; i++) 
+//     for (var i=0; i < data.length; i++)
 //     {
-//     	if (lookupCountry(data[i]["Country / territory of asylum/residence"]) === country && data[i]["Year"]===year) 
+//     	if (lookupCountry(data[i]["Country / territory of asylum/residence"]) === country && data[i]["Year"]===year)
 //         {
 //     	    return data[i]["Total Population"];
 //     	}
@@ -175,12 +175,12 @@ var countryCodeMap = [
  *
  */
 
-function availableWidth () 
+function availableWidth ()
 {
     return Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 }
 
-function availableHeight () 
+function availableHeight ()
 {
     return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 }
@@ -204,7 +204,7 @@ var saved_width = 0;
  *
  */
 
-function drawMap (world) 
+function drawMap (world)
 {
 
     console.log(world.features);
@@ -235,7 +235,7 @@ function drawMap (world)
 	.attr("height", height)
 
     var g = svg.append("g")
-	.attr("transform","scale("+scale+"),translate(-100,0)");
+	.attr("transform","scale("+scale+"),translate(-150,0)");
 
     var projection = d3.geo.mercator()
 	.center([0, 0 ])
