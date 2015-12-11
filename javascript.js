@@ -388,11 +388,14 @@ function run()
       GLOBAL.data = data;
       console.log("LOADED DATA");
 
-      d3.json("world-topo.json", function(error,world_json)
+      d3.json("world-topo-data2.json", function(error,world_json)
       {
           // topology is the json data
-          GLOBAL.world_json = world_json
-          attachVALToWorldData(world_json, data);
+          GLOBAL.world_json = world_json;
+          console.log(world_json);
+
+          // attachVALToWorldData(world_json, data);
+
           drawMap(world_json, "#mapEntering", 0, 2000);
           drawMap(world_json, "#mapExiting", 1, 2000);
       });
