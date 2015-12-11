@@ -540,12 +540,16 @@ function switchView(direction)
     {
         // show the entering svg and hide the exiting svg
         d3.select("#mapEntering").style("display", "block")
+        d3.select("#titleEntering").style("visibility", "visible")
         d3.select("#mapExiting").style("display", "none")
+        d3.select("#titleExiting").style("visibility", "hidden")
     }
     else
     {
         // the opposite of above
         d3.select("#mapEntering").style("display", "none")
+        d3.select("#titleEntering").style("visibility", "hidden")
         d3.select("#mapExiting").style("display", "block")
+        d3.select("#titleExiting").style("visibility", "visible")
     }
 }
