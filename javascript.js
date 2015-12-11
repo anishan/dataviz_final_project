@@ -325,7 +325,12 @@ function drawMap(world_json)
     var path = d3.geo.path()
 	.projection(projection);
 
-    var upperBound = 10000000;
+    //var upperBound = 10000000;
+    var upperBound = 5000000;
+    var colorLow = '#6BBD45', colorMed = '#F9FF00', colorHigh = '#EF4136';
+    var colorScale = d3.scale.linear()
+         .domain([0, upperBound/2, upperBound])
+         .range([colorLow, colorMed, colorHigh]);
 
     // Draw countries
     var country = g.selectAll(".country") // will set class once created
@@ -335,11 +340,12 @@ function drawMap(world_json)
     .attr("class", "country")
     .attr("d", path)
     .style("stroke", "gray")
-    .style("fill-opacity", function(d)
+    .style("fill", function(d)
     {
         // console.log(d.id);
-        var ref = getNumRefugees("1999", d.id, 0);
-        return 1;
+       
+        var ref = getNumRefugees("2010", d.id, 1);
+        return colorScale(ref);
     });
 
 
