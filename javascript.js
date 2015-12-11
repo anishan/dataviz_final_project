@@ -376,6 +376,12 @@ var GLOBAL = {
 
 };
 
+function printValue(sliderID, textbox) {
+    var x = document.getElementById(textbox);
+    var y = document.getElementById(sliderID);
+    x.value = y.value;
+}
+
 function run()
 {
     d3.select("#entering").on("click", function(){
@@ -384,7 +390,7 @@ function run()
     d3.select("#exiting").on("click", function(){
         switchView(1)
     });
-    d3.csv("data/refugees2.csv", function(data) {
+    d3.csv("refugees3.csv", function(data) {
       GLOBAL.data = data;
       console.log("LOADED DATA");
 
