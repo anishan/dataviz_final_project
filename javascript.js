@@ -384,7 +384,7 @@ function run()
     d3.select("#exiting").on("click", function(){
         switchView(1)
     });
-    d3.csv("data/refugees2.csv", function(data) {
+    d3.csv("data/refugees.csv", function(data) {
       GLOBAL.data = data;
       console.log("LOADED DATA");
 
@@ -392,10 +392,35 @@ function run()
       {
           // topology is the json data
           GLOBAL.world_json = world_json
-          drawMap(world_json, "#mapEntering", 0);
-          drawMap(world_json, "#mapExiting", 1);
+          attachVALToWorldData(world_json, data);
+          drawMap(world_json, "#mapEntering", 0, 2000);
+          drawMap(world_json, "#mapExiting", 1, 2000);
       });
     });
+
+}
+
+function attachVALToWorldData(world_json, data)
+{
+    var features = world_json.features;
+
+    for (var i = 0; i < features.length; i++)
+    {
+        for (var year = 1951; year <= 2014; year++)
+        {
+            string_year = year.toString();
+            features[i][string_year] = [];
+            features[i][string_year].push(getNumRefugees(year, features[i].id, 0));
+            features[i][string_year].push(getNumRefugees(year, features[i].id, 1));
+            // console.log(year);
+            // console.log(features[i].id);
+            // console.log(getNumRefugees(year, features[i].id, 1));
+            // console.log(getNumRefugees(1999, features[i].id, 1));
+            // break
+        }
+        // break
+    }
+
 
 }
 
@@ -451,7 +476,7 @@ function availableHeight ()
 }
 
 // Draw a map of the world based on the json world_json
-function drawMap(world_json, svgid, direction)
+function drawMap(world_json, svgid, direction, year)
 {
     // Find available width and height based on browser size
     var browserMargin = 50;
@@ -511,15 +536,11 @@ function drawMap(world_json, svgid, direction)
     .style("stroke", "gray")
     .style("fill", function(d)
     {
-        // console.log(d.id);
-        var ref = 0;
-        for (var year = 2010; year < 2014; year++)
-        {
-            ref += getNumRefugees(year, d.id, direction);
-        }
-        return colorScale(ref);
+        var year_string = year.toString();
+        return colorScale(d[year_string][direction]);
     });
 
+    console.log("finished draw map");
 
 }
 

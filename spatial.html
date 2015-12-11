@@ -48,6 +48,7 @@ function run () {
     d3.json("world-topo.json", function(error,topology) {
 	attachVALToWorldData(topology,data_values);
 	drawMap(topology);
+    console.log(topology);
     });
 }
 
