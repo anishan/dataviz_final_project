@@ -237,7 +237,7 @@ function playYears()
 {
     drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, 1951);
     GLOBAL.year = 1951;
-    GLOBAL.timer = setInterval(function() 
+    GLOBAL.timer = setInterval(function()
     {
         animate();
     }, 500)
@@ -396,6 +396,21 @@ function drawMap(world_json, svgid, direction, year)
     var colorScale = d3.scale.linear()
          .domain([0, upperBound])  //simulated log scale
          .range([colorLow, colorHigh]);
+
+    var valueCaption = svg.append("text")
+        .attr("x", width * 0.35 )
+        .attr("y", height * 0.85)
+        .attr("dy", "0.3em")
+        .attr("fill", "#FE9A2E")
+        .style("font-size", "36px");
+
+    var countryCaption = svg.append("text")
+        .attr("x", width * 0.35 )
+        .attr("y", height * 0.9)
+        .attr("dy", "0.3em")
+        .attr("fill", "#FE9A2E")
+        .style("font-size", "36px");
+
     // Draw countries
     var country = g.selectAll(".country") // will set class once created
     .data(world_json.features)
@@ -409,8 +424,21 @@ function drawMap(world_json, svgid, direction, year)
     {
         var year_string = year.toString();
         return colorScale(d[year_string][direction]);
+    })
+    .on("mouseover", function(d)
+    {
+        var year_string = year.toString();
+        this.style.fill = "#FE9A2E";
+        countryCaption.text(getCountryName(d.id))
+        valueCaption.text(d[year_string][direction]);
+    })
+    .on("mouseout", function(d)
+    {
+        var year_string = year.toString();
+        this.style.fill = colorScale(d[year_string][direction]);
+        countryCaption.text(" ")
+        valueCaption.text(" ");
     });
-
 }
 
 function colorLegend(svgid)
