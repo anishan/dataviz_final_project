@@ -1,7 +1,7 @@
 window.addEventListener("load",run);
-
 var GLOBAL = {
     data: [],
+    year: 1982,
     world_json: {},
     direction: 0,
     countryCodeMap: {
@@ -189,191 +189,6 @@ var GLOBAL = {
         "VUT": "Vanuatu",
         "PSE": "Palestinian"
     }
-    // countryCodeMap : {
-    //     "United States of America": "USA",
-    //     "China, Hong Kong SAR": "CHN",
-    //     "Japan": "JPN",
-    //     "United Kingdom": "GBR",
-    //     "Rep. of Korea" : "KOR",
-    //     "Norway": "NOR",
-    //     "Canada": "CAN",
-    //     "Sweden" : "SWE",
-    //     "Various/Unknown": "VAR",
-    //     "Netherlands": "NLD",
-    //     "Iran (Islamic Rep. of)" : "IRN",
-    //     "United Rep. of Tanzania": "TZA",
-    //     "Germany": "DEU",
-    //     "Singapore": "SGP",
-    //     "Denmark": "DNK",
-    //     "Switzerland" : "CHE",
-    //     "France": "FRA",
-    //     "Australia" : "AUS",
-    //     "Finland" : "FIN",
-    //     "New Zealand": "NZL",
-    //     "Luxembourg" : "LUX",
-    //     "Belgium" : "BEL",
-    //     "Austria": "AUT",
-    //     "India": "IND",
-    //     "Hong Kong": "HKG",
-    //     "United Arab Emirates": "ARE",
-    //     "Israel": "ISR",
-    //     "Ireland": "IRL",
-    //     "Poland": "POL",
-    //     "Russian Federation": "RUS",
-    //     "Taiwan": "TWN",
-    //     "Hungary": "HUN",
-    //     "Brazil": "BRA",
-    //     "Czech Rep." : "CZE",
-    //     "Spain": "ESP",
-    //     "Malaysia" : "MYS",
-    //     "Italy": "ITA",
-    //     "Vietnam": "VNM",
-    //     "Turkey" : "TUR",
-    //     "Chile": "CHL",
-    //     "Indonesia": "IDN",
-    //     "Portugal" : "PRT",
-    //     "Mexico": "MEX",
-    //     "Saudi Arabia" : "SAU",
-    //     "Philippines": "PHL",
-    //     "Bulgaria": "BGR",
-    //     "Thailand": "THA",
-    //     "Romania": "ROU",
-    //     "Colombia": "COL",
-    //     "Peru": "PER",
-    //     "Greece": "GRC",
-    //     "Egypt": "EGY",
-    //     "South Africa": "ZAF",
-    //     "Venezuela (Bolivarian Republic of)": "VEN",
-    //     "Argentina": "ARG",
-    //     "Kenya": "KEN",
-    //     "Nigeria": "NGA",
-    //     "Ukraine": "UKR",
-    //     "Ethiopia": "ETH",
-    //     "Namibia":"NAM",
-    //     "Chad": "TCD",
-    //     "Guatemala": "GTM",
-    //     "El Salvador": "SLV",
-    //     "Nicaragua": "NIC",
-    //     "Lao People's Dem. Rep.": "LAO",
-    //     "Kuwait":"KWT",
-    //     "Cambodia":"KHM",
-    //     "Mozambique": "MOZ",
-    //     "Armenia": "ARM",
-    //     "Ghana": "GHA",
-    //     "Tunisia": "TUN",
-    //     "Morocco": "MAR",
-    //     "Dem. Rep. of the Congo": "COD",
-    //     "Congo": "COG",
-    //     "Burundi": "BDI",
-    //     "Angola": "AGO",
-    //     "Rwanda": "RWA",
-    //     "Togo": "TGO",
-    //     "Senegal": "SEN",
-    //     "Uganda": "UGA",
-    //     "Central African Rep.": "CAF",
-    //     "Lebanon": "LBN",
-    //     "China, Macao SAR": "MAC",
-    //     "Nepal": "NPL",
-    //     "Serbia and Kosovo (S/RES/1244 (1999))": "SCG",
-    //     "Zambia": "ZMB",
-    //     "Bhutan": "BTN",
-    //     "Cyprus": "CYP",
-    //     "Equatorial Guinea": "GNQ",
-    //     "Sudan": "SDN",
-    //     "Benin": "BEN",
-    //     "Gabon": "GAB",
-    //     "Cameroon": "CMR",
-    //     "Gambia": "GMB",
-    //     "Swaziland": "SWZ",
-    //     "Sierra Leone": "SLE",
-    //     "Botswana": "BWA",
-    //     "Costa Rica": "CRI",
-    //     "Cuba": "CUB",
-    //     "Djibouti": "DJI",
-    //     "Algeria": "DZA",
-    //     "Ecuador": "ECU",
-    //     "Niger": "NER",
-    //     "Somalia": "SOM",
-    //     "Tibetan": "CHN",
-    //     "Panama": "PAN",
-    //     "Paraguay": "PRY",
-    //     "Bangladesh": "BGD",
-    //     "Bolivia (Plurinational State of)": "BOL",
-    //     "Honduras": "HND",
-    //     "Jordan": "JOR",
-    //     "Lesotho": "LSO",
-    //     "Syrian Arab Rep.": "SYR",
-    //     "Yemen": "YEM",
-    //     "Pakistan": "PAK",
-    //     "Belize": "BLZ",
-    //     "Dominican Rep.": "DOM",
-    //     "Dominica": "DMA",
-    //     "Papua New Guinea": "PNG",
-    //     "Qatar": "QAT",
-    //     "Burkina Faso": "BFA",
-    //     "Belarus":"BLR",
-    //     "Turkmenistan":"TKM",
-    //     "Stateless": "STA",
-    //     "Zimbabwe": "ZWE",
-    //     "Eritrea": "ERI",
-    //     "Georgia": "GEO",
-    //     "Guinea-Bissau": "GNB",
-    //     "Guyana": "GUY",
-    //     "Croatia": "HRV",
-    //     "Haiti":"HTI",
-    //     "Kazakhstan": "KAZ",
-    //     "Kyrgyzstan": "KGZ",
-    //     "Liberia": "LBR",
-    //     "Sri Lanka": "LKA",
-    //     "Myanmar": "MMR",
-    //     "Mauritania": "MRT",
-    //     "Mali": "MLI" ,
-    //     "Azerbaijan": "AZE",
-    //     "Aruba": "ABW",
-    //     "Afghanistan":"AFG",
-    //      "Albania" :"ALB",
-    //      "Antarctica": "ATA",
-    //      "French Southern Territories": "ATF",  //CANT FIND
-    //      "Bahamas":"BHS",
-    //      "Bosnia and Herzegovina":"BIH",
-    //      "Brunei Darussalam":"BRN",
-    //      "Coast of Ivory":"CIV",  //Change in the csv
-    //      "Estonia":"EST",
-    //      "Fiji":"FJI",
-    //      "Falkland Islands (Malvinas)":"FLK",
-    //      "Guinea":"GIN",    //worry about this later
-    //      "Greenland":"GRL",
-    //      "Iraq":"IRQ",
-    //      "Iceland":"ISL",
-    //      "Jamaica":"JAM"  ,
-    //      "Libya":"LBY",
-    //      "Lithuania":"LTU",
-    //      "Latvia":"LVA",
-    //      "Rep. of Moldova":"MDA",
-    //      "Madagascar":"MDG",
-    //      "The former Yugoslav Republic of Macedonia":"MKD",
-    //      "Montenegro":"MNE",
-    //      "Mongolia":"MNG",
-    //      "Malawi":"MWI",
-    //      "New Caledonia":"NCL",
-    //      "Oman":"OMN",
-    //      "Puerto Rico":"PRI",
-    //      "Dem. People's Rep. of Korea":"PRK",
-    //      "South Sudan": "SDS",
-    //      "Solomon Islands":"SLB",
-    //      "Serbia":"SRB", //two serbia's?
-    //      "Suriname":"SUR",
-    //      "Slovakia":"SVK",
-    //      "Slovenia":"SVN",
-    //      "Tajikistan":"TJK",
-    //      "Timor-Leste":"TLS",
-    //      "Trinidad and Tobogo":"TTO",
-    //      "Uruguay":"URY",
-    //      "Uzbekistan":"UZB",
-    //      "Vanuatu":"VUT",
-    //      "Palestinian": "PSE"
-    // }
-
 };
 
 function printValue(sliderID, textbox) {
@@ -384,6 +199,11 @@ function printValue(sliderID, textbox) {
 
 function run()
 {
+    var slider = document.getElementById("slider");
+     slider.addEventListener("change", function(){
+         document.getElementById("output").innerHTML = this.value;
+    });
+
     d3.select("#entering").on("click", function(){
         switchView(0)
     });
@@ -402,8 +222,7 @@ function run()
 
       // attachVALToWorldData(world_json, data);
 
-      drawMap(world_json, "#mapEntering", 0, 2000);
-      drawMap(world_json, "#mapExiting", 1, 2000);
+      drawMap(world_json, "#mapSVG", 0, GLOBAL.year);
     });
     // });
 
@@ -431,6 +250,15 @@ function attachVALToWorldData(world_json, data)
     }
 
 
+}
+
+function clearSVG(svgid)
+{
+    var svg = document.getElementById(svgid);
+    while(svg.lastChild)
+    {
+        svg.removeChild(svg.lastChild);
+    }
 }
 
 // get data for a specific year, country
@@ -487,6 +315,7 @@ function availableHeight ()
 // Draw a map of the world based on the json world_json
 function drawMap(world_json, svgid, direction, year)
 {
+    clearSVG(svgid.substring(1,svgid.length));
     // Find available width and height based on browser size
     var browserMargin = 50;
     var availWidth = availableWidth() - browserMargin;
@@ -529,10 +358,10 @@ function drawMap(world_json, svgid, direction, year)
 	.projection(projection);
 
     //var upperBound = 10000000;
-    var upperBound = 10000000;
-    var colorLow = '#0C3B4C', colorMed = '#68CAD8', colorHigh = '#DFE55E';
+    var upperBound = 3000000;
+    var colorLow = '#0C3B4C', colorMed = '#3CB6BE', colorHigh = '#A6DDE6';
     var colorScale = d3.scale.linear()
-         .domain([0, upperBound/500, upperBound])
+         .domain([0, upperBound/200, upperBound])  //simulated log scale
          .range([colorLow, colorMed, colorHigh]);
 
     // Draw countries
@@ -549,31 +378,42 @@ function drawMap(world_json, svgid, direction, year)
         return colorScale(d[year_string][direction]);
     });
 
-    console.log("finished draw map");
+}
 
+
+function outputUpdate(time) 
+{
+    document.getElementById("output").innerHTML = time;
+    GLOBAL.year = time;
+    if(GLOBAL.direction == 1)
+    {
+        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year)
+    }
+    else
+    {
+        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year)
+    }
 }
 
 // switching views between entering and exiting refugees
 function switchView(direction)
 {
-    // get the svg elements
-    svgEntering = document.getElementById("mapEntering");
-    svgExiting = document.getElementById("mapExiting");
-
     if (direction == 0) // if the entering button was clicked
     {
         // show the entering svg and hide the exiting svg
-        d3.select("#mapEntering").style("display", "block")
-        d3.select("#titleEntering").style("visibility", "visible")
-        d3.select("#mapExiting").style("display", "none")
-        d3.select("#titleExiting").style("visibility", "hidden")
+        // d3.select("#titleEntering").style("display", "block")
+        // d3.select("#titleExiting").style("display", "none")
+        document.getElementById("titleText").innerHTML = "Refugees Entering";
+        GLOBAL.direction = 0;
+        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year)
     }
     else
     {
         // the opposite of above
-        d3.select("#mapEntering").style("display", "none")
-        d3.select("#titleEntering").style("visibility", "hidden")
-        d3.select("#mapExiting").style("display", "block")
-        d3.select("#titleExiting").style("visibility", "visible")
+        // d3.select("#divEntering").style("display", "none")
+        // d3.select("#Exiting").style("display", "block")
+        GLOBAL.direction = 1;
+        document.getElementById("titleText").innerHTML = "Refugees Exiting";
+        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year)
     }
 }

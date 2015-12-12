@@ -1,0 +1,14 @@
+input[type=range] {
+    -webkit-appearance: none;
+    background-color: #3CB6BE;
+    width: 200px;
+    height:20px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+     -webkit-appearance: none;
+    background-color: #0C3B4C;
+    opacity: 0.7;
+    width: 10px;
+    height: 26px;
+}

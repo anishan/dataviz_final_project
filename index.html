@@ -8,25 +8,17 @@
     <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script type="text/javascript" src="./javascript.js"></script>
-
+     <link rel="stylesheet" href="stylesheets/default.css">
 </head>
 
 <body>
     <button type="button" id="entering">Refugees Entering</button>
     <button type="button" id="exiting">Refugees Exiting</button>
-    <div id = "titleEntering" style="text-align:center; visibility:visible" >
-    <h1>Refugees Entering</h1>
-    </div>
 
-    <svg id="mapEntering" height="760" width="380">
-    </svg>
-
-    <div id = "titleExiting" style="text-align:center;visibility:hidden">
-    <h1>Refugees Exiting</h1>
-    </div>
-
-    <svg id="mapExiting" height="760" width="380" display="none">
-    </svg>
+    <h1 id = "titleText">Refugees Entering</h1>
+    <svg id="mapSVG" height="760" width="380"></svg>
+  <center>1951 <input type="range" id="slider" min="1951" max="2013" oninput="outputUpdate(value)" > 2013
+    <div id="output">1982 </div></center>
 
 
 </body>
