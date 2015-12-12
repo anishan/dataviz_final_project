@@ -4,6 +4,7 @@ var GLOBAL = {
     year: 1982,
     world_json: {},
     direction: 0,
+    timer: 0,
     countryCodeMap: {
         "USA": "United States of America",
         "CHN": "China, Hong Kong SAR",
@@ -210,6 +211,9 @@ function run()
     d3.select("#exiting").on("click", function(){
         switchView(1)
     });
+    d3.select("#playButton").on("click", function(){
+        playYears();
+    });
     // d3.csv("refugees3.csv", function(data) {
     //   GLOBAL.data = data;
     //   console.log("LOADED DATA");
@@ -228,13 +232,35 @@ function run()
 
 }
 
+function playYears()
+{
+    drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, 1951);
+    GLOBAL.year = 1951;
+    GLOBAL.timer = setInterval(function() 
+    {
+        animate();
+    }, 500)
+}
+
+function animate()
+{
+    if (GLOBAL.year >= 2013)
+    {
+        clearInterval(GLOBAL.timer);
+    }
+    drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
+    GLOBAL.year++;
+    document.getElementById("slider").value = GLOBAL.year;
+    document.getElementById("output").innerHTML = GLOBAL.year;
+}
+
 function attachVALToWorldData(world_json, data)
 {
     var features = world_json.features;
 
     for (var i = 0; i < features.length; i++)
     {
-        for (var year = 1951; year <= 2014; year++)
+        for (var year = 1951; year <= 2013; year++)
         {
             string_year = year.toString();
             features[i][string_year] = [];
