@@ -1,9 +1,10 @@
 window.addEventListener("load",run);
+
 var GLOBAL = {
-    data: [],
+    data: [], // holds the csv data (only used initialy to add data to json)
     year: 1982,
-    world_json: {},
-    direction: 0,
+    world_json: {}, // json featurs world map
+    direction: 0, // 0=entering, 1=exiting
     timer: 0,
     countryCodeMap: {
         "USA": "United States of America",
@@ -192,93 +193,104 @@ var GLOBAL = {
     }
 };
 
-function printValue(sliderID, textbox) {
-    var x = document.getElementById(textbox);
-    var y = document.getElementById(sliderID);
-    x.value = y.value;
-}
-
+// Run: load data and create initial map
 function run()
 {
+    // Initialize elements of page with their correct listeners
+
+    // Slider for year
     var slider = document.getElementById("slider");
      slider.addEventListener("change", function(){
          document.getElementById("output").innerHTML = this.value;
     });
 
+    // Entering button
     d3.select("#entering").on("click", function(){
         switchView(0)
     });
+
+    // Exiting button
     d3.select("#exiting").on("click", function(){
         switchView(1)
     });
+
+    // Play button
     d3.select("#playButton").on("click", function(){
         playYears();
     });
-    // d3.csv("refugees3.csv", function(data) {
-    //   GLOBAL.data = data;
-    //   console.log("LOADED DATA");
 
+    // Load countries borders and data numbers from json
     d3.json("world-topo-data2.json", function(error,world_json)
     {
       // topology is the json data
       GLOBAL.world_json = world_json;
       console.log(world_json);
 
-      // attachVALToWorldData(world_json, data);
-
       drawMap(world_json, "#mapSVG", 0, GLOBAL.year);
       colorLegend("#legend");
     });
-    // });
-
 }
 
+// Display the year from the slider
+function printValue(sliderID, textbox) {
+    var x = document.getElementById(textbox);
+    var y = document.getElementById(sliderID);
+    x.value = y.value;
+}
+
+// Animate showing refugee data over time
 function playYears()
 {
+    // Start at initial time or 1951
     drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, 1951);
     GLOBAL.year = 1951;
+
+    // Do pauses with setInterval, calling aminate function
     GLOBAL.timer = setInterval(function()
     {
         animate();
-    }, 500)
+    }, 500) // Pause for 500 milliseconds
 }
 
+// Draws one frame of the animation
 function animate()
 {
+    //Stop after the end of the data
     if (GLOBAL.year >= 2013)
     {
         clearInterval(GLOBAL.timer);
     }
+
+    // Draw the map
     drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
     GLOBAL.year++;
+
+    // Move the slider
     document.getElementById("slider").value = GLOBAL.year;
     document.getElementById("output").innerHTML = GLOBAL.year;
 }
 
+// Used to add our refugee data to the world json
 function attachVALToWorldData(world_json, data)
 {
     var features = world_json.features;
 
+    // For every country
     for (var i = 0; i < features.length; i++)
     {
+        // For every year
         for (var year = 1951; year <= 2013; year++)
         {
+            // Find the total number of refugees from the csv
             string_year = year.toString();
             features[i][string_year] = [];
             features[i][string_year].push(getNumRefugees(year, features[i].id, 0));
             features[i][string_year].push(getNumRefugees(year, features[i].id, 1));
-            // console.log(year);
-            // console.log(features[i].id);
-            // console.log(getNumRefugees(year, features[i].id, 1));
-            // console.log(getNumRefugees(1999, features[i].id, 1));
-            // break
         }
-        // break
     }
-
-
 }
 
+// Clear the svg
 function clearSVG(svgid)
 {
     var svg = document.getElementById(svgid);
@@ -387,16 +399,11 @@ function drawMap(world_json, svgid, direction, year)
     //var upperBound = 10000000;
     var upperBound = 1000000;
     var colorLow = '#2B7984', colorMed = '#3CB6BE', colorHigh = '#95D2D7';
-    // var colorScale = d3.scale.linear()
-    //      .domain([0, upperBound/200, upperBound])  //simulated log scale
-    //      .range([colorLow, colorMed, colorHigh]);
-    // var colorScale = d3.scale.log().base(10)
-    //      .domain([0, upperBound])  //simulated log scale
-    //      .range([colorLow, colorMed]);
     var colorScale = d3.scale.linear()
          .domain([0, upperBound])  //simulated log scale
          .range([colorLow, colorHigh]);
 
+    // Text field for the number
     var valueCaption = svg.append("text")
         .attr("x", width * 0.35 )
         .attr("y", height * 0.85)
@@ -404,6 +411,7 @@ function drawMap(world_json, svgid, direction, year)
         .attr("fill", "#FE9A2E")
         .style("font-size", "36px");
 
+    // Text field for the country name
     var countryCaption = svg.append("text")
         .attr("x", width * 0.35 )
         .attr("y", height * 0.9)
@@ -441,6 +449,7 @@ function drawMap(world_json, svgid, direction, year)
     });
 }
 
+// Make a legend for colors
 function colorLegend(svgid)
 {
     var colorLow = '#2B7984';
@@ -468,7 +477,7 @@ function colorLegend(svgid)
     .call(legendLinear);
 }
 
-
+// Update map based on time slider value
 function outputUpdate(time)
 {
     document.getElementById("output").innerHTML = time;
@@ -476,12 +485,10 @@ function outputUpdate(time)
     if(GLOBAL.direction == 1)
     {
         drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
-        //colorLegend("#mapSVG");
     }
     else
     {
         drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
-        //colorLegend("#mapSVG");
     }
 }
 
@@ -494,7 +501,6 @@ function switchView(direction)
         document.getElementById("titleText").innerHTML = "Refugees Entering";
         GLOBAL.direction = 0;
         drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year);
-        //colorLegend("#mapSVG");
     }
     else
     {
@@ -502,7 +508,6 @@ function switchView(direction)
         GLOBAL.direction = 1;
         document.getElementById("titleText").innerHTML = "Refugees Exiting";
         drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year);
-        //colorLegend("#mapSVG");
     }
 }
 // References
