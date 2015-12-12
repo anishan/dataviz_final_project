@@ -390,22 +390,22 @@ function run()
     d3.select("#exiting").on("click", function(){
         switchView(1)
     });
-    d3.csv("refugees3.csv", function(data) {
-      GLOBAL.data = data;
-      console.log("LOADED DATA");
+    // d3.csv("refugees3.csv", function(data) {
+    //   GLOBAL.data = data;
+    //   console.log("LOADED DATA");
 
-      d3.json("world-topo-data2.json", function(error,world_json)
-      {
-          // topology is the json data
-          GLOBAL.world_json = world_json;
-          console.log(world_json);
+    d3.json("world-topo-data2.json", function(error,world_json)
+    {
+      // topology is the json data
+      GLOBAL.world_json = world_json;
+      console.log(world_json);
 
-          // attachVALToWorldData(world_json, data);
+      // attachVALToWorldData(world_json, data);
 
-          drawMap(world_json, "#mapEntering", 0, 2000);
-          drawMap(world_json, "#mapExiting", 1, 2000);
-      });
+      drawMap(world_json, "#mapEntering", 0, 2000);
+      drawMap(world_json, "#mapExiting", 1, 2000);
     });
+    // });
 
 }
 
