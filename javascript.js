@@ -223,6 +223,7 @@ function run()
       // attachVALToWorldData(world_json, data);
 
       drawMap(world_json, "#mapSVG", 0, GLOBAL.year);
+      colorLegend("#mapSVG");
     });
     // });
 
@@ -380,8 +381,34 @@ function drawMap(world_json, svgid, direction, year)
 
 }
 
+function colorLegend(svgid)
+{
+    var colorLow = '#0C3B4C';
+    var colorMed = '#3CB6BE';
+    var colorHigh = '#A6DDE6';
+    var upperBound = 3000000;
+    var linear = d3.scale.linear()
+    .domain([0, upperBound])
+    .range([colorLow, colorMed, colorHigh]);
 
-function outputUpdate(time) 
+    var svg = d3.select(svgid);
+
+    svg.append("g")
+    .attr("class", "legendLinear")
+    .attr("transform", "translate(20,20)");
+
+    var legendLinear = d3.legend.color()
+    .shapeWidth(30)
+    .cells(10)
+    .orient('vertical')
+    .scale(linear);
+
+    svg.select(".legendLinear")
+    .call(legendLinear);
+}
+
+
+function outputUpdate(time)
 {
     document.getElementById("output").innerHTML = time;
     GLOBAL.year = time;
@@ -401,19 +428,17 @@ function switchView(direction)
     if (direction == 0) // if the entering button was clicked
     {
         // show the entering svg and hide the exiting svg
-        // d3.select("#titleEntering").style("display", "block")
-        // d3.select("#titleExiting").style("display", "none")
         document.getElementById("titleText").innerHTML = "Refugees Entering";
         GLOBAL.direction = 0;
         drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year)
+        colorLegend("#mapSVG");
     }
     else
     {
         // the opposite of above
-        // d3.select("#divEntering").style("display", "none")
-        // d3.select("#Exiting").style("display", "block")
         GLOBAL.direction = 1;
         document.getElementById("titleText").innerHTML = "Refugees Exiting";
-        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year)
+        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year);
+        colorLegend("#mapSVG");
     }
 }
