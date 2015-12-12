@@ -414,11 +414,13 @@ function outputUpdate(time)
     GLOBAL.year = time;
     if(GLOBAL.direction == 1)
     {
-        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year)
+        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
+        //colorLegend("#mapSVG");
     }
     else
     {
-        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year)
+        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
+        //colorLegend("#mapSVG");
     }
 }
 
@@ -430,8 +432,8 @@ function switchView(direction)
         // show the entering svg and hide the exiting svg
         document.getElementById("titleText").innerHTML = "Refugees Entering";
         GLOBAL.direction = 0;
-        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year)
-        colorLegend("#mapSVG");
+        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year);
+        //colorLegend("#mapSVG");
     }
     else
     {
@@ -439,6 +441,6 @@ function switchView(direction)
         GLOBAL.direction = 1;
         document.getElementById("titleText").innerHTML = "Refugees Exiting";
         drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year);
-        colorLegend("#mapSVG");
+        //colorLegend("#mapSVG");
     }
 }
