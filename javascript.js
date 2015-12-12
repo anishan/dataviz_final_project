@@ -444,3 +444,5 @@ function switchView(direction)
         //colorLegend("#mapSVG");
     }
 }
+// References
+// http://d3-legend.susielu.com/ for a color legend
