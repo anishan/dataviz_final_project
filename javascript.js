@@ -376,6 +376,12 @@ var GLOBAL = {
 
 };
 
+function printValue(sliderID, textbox) {
+    var x = document.getElementById(textbox);
+    var y = document.getElementById(sliderID);
+    x.value = y.value;
+}
+
 function run()
 {
     d3.select("#entering").on("click", function(){
@@ -384,7 +390,7 @@ function run()
     d3.select("#exiting").on("click", function(){
         switchView(1)
     });
-    d3.csv("data/refugees2.csv", function(data) {
+    d3.csv("refugees3.csv", function(data) {
       GLOBAL.data = data;
       console.log("LOADED DATA");
 
@@ -534,12 +540,16 @@ function switchView(direction)
     {
         // show the entering svg and hide the exiting svg
         d3.select("#mapEntering").style("display", "block")
+        d3.select("#titleEntering").style("visibility", "visible")
         d3.select("#mapExiting").style("display", "none")
+        d3.select("#titleExiting").style("visibility", "hidden")
     }
     else
     {
         // the opposite of above
         d3.select("#mapEntering").style("display", "none")
+        d3.select("#titleEntering").style("visibility", "hidden")
         d3.select("#mapExiting").style("display", "block")
+        d3.select("#titleExiting").style("visibility", "visible")
     }
 }
