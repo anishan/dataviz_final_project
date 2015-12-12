@@ -1,6 +1,6 @@
 input[type=range] {
     -webkit-appearance: none;
-    background-color: #3CB6BE;
+    background-color: #95D2D7;
     width: 200px;
     height:20px;
 }
@@ -12,3 +12,43 @@ input[type="range"]::-webkit-slider-thumb {
     width: 10px;
     height: 26px;
 }
+
+#legend{
+	background: transparent;
+	color: #95D2D7;
+	font-family: sans-serif;
+	float:left;
+	width: 10%;
+}
+
+#mapSVG{
+	background: transparent;
+	float: left;
+	width: 90%;
+}
+
+
+body{
+	background: #00343A;
+	color: #95D2D7;
+	font-family: sans-serif;
+}
+
+h1 {
+	color: #95D2D7;
+	font-family: sans-serif;
+}
+
+p {
+	color: #95D2D7;
+	font-family: sans-serif;
+}
+
+#titleBox{
+	background: transparent;
+	color: #95D2D7;
+	font-family: sans-serif;
+	float:left;
+	width: 20%;
+}
+

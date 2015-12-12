@@ -227,7 +227,7 @@ function run()
       // attachVALToWorldData(world_json, data);
 
       drawMap(world_json, "#mapSVG", 0, GLOBAL.year);
-      colorLegend("#mapSVG");
+      colorLegend("#legend");
     });
     // });
 
@@ -344,7 +344,7 @@ function drawMap(world_json, svgid, direction, year)
 {
     clearSVG(svgid.substring(1,svgid.length));
     // Find available width and height based on browser size
-    var browserMargin = 50;
+    var browserMargin = 0;
     var availWidth = availableWidth() - browserMargin;
     var availHeight = availableHeight() - browserMargin;
 
@@ -372,7 +372,7 @@ function drawMap(world_json, svgid, direction, year)
 
     // Making group with correct scale and translation
     var g = svg.append("g")
-	.attr("transform","scale("+scale+"),translate(-100,0)");
+	.attr("transform","scale("+scale+"),translate(-150,0)");
 
     // Uses a mercator map, centered and unrotated
     var projection = d3.geo.mercator()
@@ -385,12 +385,17 @@ function drawMap(world_json, svgid, direction, year)
 	.projection(projection);
 
     //var upperBound = 10000000;
-    var upperBound = 3000000;
-    var colorLow = '#0C3B4C', colorMed = '#3CB6BE', colorHigh = '#A6DDE6';
+    var upperBound = 1000000;
+    var colorLow = '#2B7984', colorMed = '#3CB6BE', colorHigh = '#95D2D7';
+    // var colorScale = d3.scale.linear()
+    //      .domain([0, upperBound/200, upperBound])  //simulated log scale
+    //      .range([colorLow, colorMed, colorHigh]);
+    // var colorScale = d3.scale.log().base(10)
+    //      .domain([0, upperBound])  //simulated log scale
+    //      .range([colorLow, colorMed]);
     var colorScale = d3.scale.linear()
-         .domain([0, upperBound/200, upperBound])  //simulated log scale
-         .range([colorLow, colorMed, colorHigh]);
-
+         .domain([0, upperBound])  //simulated log scale
+         .range([colorLow, colorHigh]);
     // Draw countries
     var country = g.selectAll(".country") // will set class once created
     .data(world_json.features)
@@ -398,7 +403,8 @@ function drawMap(world_json, svgid, direction, year)
     .append("path")
     .attr("class", "country")
     .attr("d", path)
-    .style("stroke", "gray")
+    .style("stroke", "black")
+    .style("stroke-width", .5)
     .style("fill", function(d)
     {
         var year_string = year.toString();
@@ -409,23 +415,24 @@ function drawMap(world_json, svgid, direction, year)
 
 function colorLegend(svgid)
 {
-    var colorLow = '#0C3B4C';
-    var colorMed = '#3CB6BE';
-    var colorHigh = '#A6DDE6';
+    var colorLow = '#2B7984';
+    var colorHigh = '#95D2D7';
     var upperBound = 3000000;
     var linear = d3.scale.linear()
     .domain([0, upperBound])
-    .range([colorLow, colorMed, colorHigh]);
+    .range([colorLow, colorHigh]);
 
     var svg = d3.select(svgid);
 
     svg.append("g")
     .attr("class", "legendLinear")
+    .attr("fill", "#95D2D7")
     .attr("transform", "translate(20,20)");
 
     var legendLinear = d3.legend.color()
-    .shapeWidth(30)
-    .cells(10)
+    .shapeWidth(10)
+    .shapeHeight(50)
+    .cells(6)
     .orient('vertical')
     .scale(linear);
 
