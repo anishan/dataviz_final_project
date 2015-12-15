@@ -15,15 +15,18 @@
 <body>
     <center>
     <h1 id = "titleText">Refugees Entering</h1>
-    <button type="button" id="entering">Refugees Entering</button>
-    <button type="button" id="exiting">Refugees Exiting</button>
+    <button type="button" id="entering" class="new-button">Refugees Entering</button>
+    <button type="button" id="exiting" class="new-button">Refugees Exiting</button>
+     <img src="images/playbutton.svg" id="playButton"></button>
+     <br>1951 <input type="range" id="slider" min="1951" max="2013" oninput="outputUpdate(value)" value ="1982" style=margin-top:5px> 2013 
+    <div id="output">1982</div>
     </center>
+
     <svg id="legend" height="600" width = "50"></svg>
     <svg id="mapSVG" height="760" width="380"></svg>
     <br><br>
     
-    <center><button type="button" id="playButton">Play</button> <p>1951 <input type="range" id="slider" min="1951" max="2013" oninput="outputUpdate(value)" value ="1982"> 2013 </p>
-    <div id="output"><p> 1982 </p></div></center>
+   
 
 
 </body>
