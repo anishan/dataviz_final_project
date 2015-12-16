@@ -49,14 +49,12 @@ input[type="range"]::-webkit-slider-thumb {
 	font-family:  "DIN", sans-serif;
 	float:left;
 	width: 10%;
-	padding-top: 10%;
 }
 
 #mapSVG{
 	background: transparent;
 	float: left;
 	width: 90%;
-	padding-top: 10%;
 }
 
 @font-face {
