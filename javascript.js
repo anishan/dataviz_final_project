@@ -260,7 +260,7 @@ function animate()
     {
         clearInterval(GLOBAL.timer);
     }
-
+    else{
     // Draw the map
     drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
     GLOBAL.year++;
@@ -268,6 +268,7 @@ function animate()
     // Move the slider
     document.getElementById("slider").value = GLOBAL.year;
     document.getElementById("output").innerHTML = GLOBAL.year;
+}
 }
 
 // Used to add our refugee data to the world json
