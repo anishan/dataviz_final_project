@@ -256,7 +256,7 @@ function playYears()
 function animate()
 {
     //Stop after the end of the data
-    if (GLOBAL.year >= 2013)
+    if (GLOBAL.year == 2013)
     {
         clearInterval(GLOBAL.timer);
     }
