@@ -2,7 +2,8 @@ window.addEventListener("load",run);
 
 var GLOBAL = {
     data: [], // holds the csv data (only used initialy to add data to json)
-    year: 1982,
+    year1: 1982,
+    year2: 1982,
     world_json: {}, // json featurs world map
     direction: 0, // 0=entering, 1=exiting
     timer: 0,
@@ -226,7 +227,7 @@ function run()
       GLOBAL.world_json = world_json;
       console.log(world_json);
 
-      drawMap(world_json, "#mapSVG", 0, GLOBAL.year);
+      drawMap(world_json, "#mapSVG", 0, GLOBAL.year1, GLOBAL.year2);
       colorLegend("#legend");
     });
 }
@@ -242,7 +243,7 @@ function printValue(sliderID, textbox) {
 function playYears()
 {
     // Start at initial time or 1951
-    drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, 1951);
+    drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, 1951, 1951);
     GLOBAL.year = 1951;
 
     // Do pauses with setInterval, calling aminate function
@@ -256,18 +257,19 @@ function playYears()
 function animate()
 {
     //Stop after the end of the data
-    if (GLOBAL.year == 2013)
+    if (GLOBAL.year1 > 2013)
     {
         clearInterval(GLOBAL.timer);
     }
 
     // Draw the map
-    drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
-    GLOBAL.year++;
+    drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year1, GLOBAL.year2);
+    GLOBAL.year1++;
+    GLOBAL.year2++;
 
     // Move the slider
-    document.getElementById("slider").value = GLOBAL.year;
-    document.getElementById("output").innerHTML = GLOBAL.year;
+    document.getElementById("slider").value = GLOBAL.year1;
+    document.getElementById("output").innerHTML = GLOBAL.year1;
 }
 
 // Used to add our refugee data to the world json
@@ -352,7 +354,7 @@ function availableHeight ()
 }
 
 // Draw a map of the world based on the json world_json
-function drawMap(world_json, svgid, direction, year)
+function drawMap(world_json, svgid, direction, year1, year2)
 {
     clearSVG(svgid.substring(1,svgid.length));
     // Find available width and height based on browser size
@@ -430,20 +432,35 @@ function drawMap(world_json, svgid, direction, year)
     .style("stroke-width", .5)
     .style("fill", function(d)
     {
-        var year_string = year.toString();
-        return colorScale(d[year_string][direction]);
+        var total = 0;
+        for (var year = year1; year <= year2; year++)
+        {
+            var year_string = year.toString();
+            total += d[year_string][direction];
+        }
+        return colorScale(total);
     })
     .on("mouseover", function(d)
     {
-        var year_string = year.toString();
+        var total = 0;
+        for (var year = year1; year <= year2; year++)
+        {
+            var year_string = year.toString();
+            total += d[year_string][direction];
+        }
         this.style.fill = "#FE9A2E";
         countryCaption.text(getCountryName(d.id))
-        valueCaption.text(d[year_string][direction]);
+        valueCaption.text(total);
     })
     .on("mouseout", function(d)
     {
-        var year_string = year.toString();
-        this.style.fill = colorScale(d[year_string][direction]);
+        var total = 0;
+        for (var year = year1; year <= year2; year++)
+        {
+            var year_string = year.toString();
+            total += d[year_string][direction];
+        }
+        this.style.fill = colorScale(total);
         countryCaption.text(" ")
         valueCaption.text(" ");
     });
@@ -484,11 +501,11 @@ function outputUpdate(time)
     GLOBAL.year = time;
     if(GLOBAL.direction == 1)
     {
-        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
+        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year1, GLOBAL.year2);
     }
     else
     {
-        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year);
+        drawMap(GLOBAL.world_json, "#mapSVG", GLOBAL.direction, GLOBAL.year1, GLOBAL.year2);
     }
 }
 
@@ -500,14 +517,14 @@ function switchView(direction)
         // show the entering svg and hide the exiting svg
         document.getElementById("titleText").innerHTML = "Refugees Entering";
         GLOBAL.direction = 0;
-        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year);
+        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year1, GLOBAL.year2);
     }
     else
     {
         // the opposite of above
         GLOBAL.direction = 1;
         document.getElementById("titleText").innerHTML = "Refugees Exiting";
-        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year);
+        drawMap(GLOBAL.world_json, "#mapSVG",GLOBAL.direction, GLOBAL.year1, GLOBAL.year2);
     }
 }
 // References
